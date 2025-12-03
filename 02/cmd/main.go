@@ -10,6 +10,7 @@ import (
 )
 
 const (
+	// FILEPATH = "testinput1.txt"
 	FILEPATH = "input.txt"
 )
 
@@ -29,6 +30,9 @@ func main() {
 
 	p1 := NewPart1(entries)
 	p1.Run()
+
+	p2 := NewPart2(entries)
+	p2.Run()
 }
 
 func processInput(filepath string) ([]*PasswordEntry, error) {
