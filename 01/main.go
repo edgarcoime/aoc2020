@@ -105,6 +105,7 @@ func processInput(filepath string) ([]int, error) {
 		err := fmt.Errorf("Error opening file: +%v", err)
 		return nil, err
 	}
+	defer file.Close()
 
 	var nums []int
 	scanner := bufio.NewScanner(file)
