@@ -8,7 +8,9 @@ import (
 )
 
 const (
-	FILEPATH   = "cmd/03/input/input.txt"
+	FILEPATH = "cmd/03/input/input.txt"
+
+	// Part 1
 	RISE       = 1
 	RUN        = 3
 	TREE_CHAR  = '#'
@@ -16,6 +18,15 @@ const (
 )
 
 func main() {
+	// part 2
+	slopes := [][]int{
+		{1, 1},
+		{3, 1},
+		{5, 1},
+		{7, 1},
+		{1, 2},
+	}
+
 	treeMap, err := processInput(FILEPATH)
 	if err != nil {
 		fmt.Println("Error processing input:", err)
@@ -23,8 +34,10 @@ func main() {
 	}
 
 	p1 := NewPart1(treeMap)
+	p2 := NewPart2(treeMap, slopes)
 
 	p1.Run()
+	p2.Run()
 }
 
 func processInput(filepath string) ([][]rune, error) {
