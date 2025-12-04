@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	// FILEPATH = "testinput1.txt"
-	FILEPATH = "input.txt"
+	FILEPATH = "cmd/02/input/input.txt"
 )
 
 type PasswordEntry struct {

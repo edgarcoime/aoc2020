@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	FILEPATH = "input.txt"
+	FILEPATH = "cmd/01/input/input.txt"
 	TARGET   = 2020
 )
 
