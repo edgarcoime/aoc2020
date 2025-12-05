@@ -14,18 +14,28 @@ const (
 )
 
 func main() {
-	entries, err := processInput(INPUTPATH)
+	entries1, err := processInput(INPUTPATH, validatePassportEntry)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Simple validator error:", err)
 		os.Exit(1)
 	}
 
-	p1 := NewPart1(entries)
+	p1 := NewPart1(entries1)
+	res1 := p1.Run()
+	fmt.Println("Part 1:", res1)
 
-	p1.Run()
+	entries2, err := processInput(INPUTPATH, validatePassportEntryStrict)
+	if err != nil {
+		fmt.Println("Strict validator error:", err)
+		os.Exit(1)
+	}
+
+	p2 := NewPart1(entries2)
+	res2 := p2.Run()
+	fmt.Println("Part 2:", res2)
 }
 
-func processInput(filepath string) ([]map[string]string, error) {
+func processInput(filepath string, validator func(map[string]string) bool) ([]map[string]string, error) {
 	// open file
 	file, err := os.Open(filepath)
 	if err != nil {
@@ -44,7 +54,7 @@ func processInput(filepath string) ([]map[string]string, error) {
 		// If empty line then that means end of entry
 		if line == "" {
 			passport := parsePassportEntry(entryParts)
-			valid := validatePassportEntry(passport)
+			valid := validator(passport)
 			if valid {
 				entries = append(entries, passport)
 			}
