@@ -1,0 +1,62 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"slices"
+	"strings"
+)
+
+const (
+	INPUTPATH = "cmd/04/input/input.txt"
+	TESTPATH  = "cmd/04/input/test.txt"
+)
+
+func main() {
+	entries, err := processInput(INPUTPATH)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	p1 := NewPart1(entries)
+
+	p1.Run()
+}
+
+func processInput(filepath string) ([]map[string]string, error) {
+	// open file
+	file, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	var entries []map[string]string
+
+	var entryParts []string
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		line = strings.TrimSpace(line)
+
+		// If empty line then that means end of entry
+		if line == "" {
+			passport := parsePassportEntry(entryParts)
+			valid := validatePassportEntry(passport)
+			if valid {
+				entries = append(entries, passport)
+			}
+
+			entryParts = make([]string, 0)
+			continue
+		}
+
+		// otherwise have to append parts
+		lineParts := strings.Split(line, " ")
+		entryParts = slices.Concat(entryParts, lineParts)
+	}
+
+	return entries, nil
+}
