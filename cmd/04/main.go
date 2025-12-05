@@ -68,5 +68,14 @@ func processInput(filepath string, validator func(map[string]string) bool) ([]ma
 		entryParts = slices.Concat(entryParts, lineParts)
 	}
 
+	// Get last entry of page
+	if len(entryParts) >= 0 {
+		passport := parsePassportEntry(entryParts)
+		valid := validator(passport)
+		if valid {
+			entries = append(entries, passport)
+		}
+	}
+
 	return entries, nil
 }
